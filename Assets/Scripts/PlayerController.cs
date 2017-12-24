@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour {
 
     Rigidbody2D myRB;
     SpriteRenderer mySR;
+    Animator myAnim;
 
     public float maxSpeed;
 
@@ -15,6 +16,7 @@ public class PlayerController : MonoBehaviour {
 	void Start () {
         myRB = GetComponent<Rigidbody2D>();
         mySR = GetComponent<SpriteRenderer>();
+        myAnim = GetComponent<Animator>();
 	}
 	
 	// Update is called once per frame
@@ -32,6 +34,7 @@ public class PlayerController : MonoBehaviour {
         }
 
         myRB.velocity = new Vector2(move * maxSpeed, myRB.velocity.y);
+        myAnim.SetFloat("MoveSpeed", Mathf.Abs(move));
 	}
 
     void flip()
