@@ -31,7 +31,8 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if(grounded && Input.GetAxis("Jump") > 0) //player jumping
+        //player jumping
+        if (grounded && Input.GetAxis("Jump") > 0) 
         {
             myAnim.SetBool("isGrounded", false);
             myRB.velocity = new Vector2(myRB.velocity.x, 0f);
@@ -40,10 +41,11 @@ public class PlayerController : MonoBehaviour {
         }
 
         grounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);   //creates a circle at feet and checks if there is an overlap
-        myAnim.SetBool("isGrounded", grounded);
+        myAnim.SetBool("isGrounded", grounded); // Sets bool in animator
 
+
+        // Horizontal movement
         float move = Input.GetAxis("Horizontal");
-        Debug.Log(move);
 
         if(move > 0 && !facingRight)
         {
@@ -55,9 +57,10 @@ public class PlayerController : MonoBehaviour {
         }
 
         myRB.velocity = new Vector2(move * maxSpeed, myRB.velocity.y);
-        myAnim.SetFloat("MoveSpeed", Mathf.Abs(move));
+        myAnim.SetFloat("MoveSpeed", Mathf.Abs(move)); // Sets float in animator
 	}
 
+    // Flips characters X axis
     void flip()
     {
         facingRight = !facingRight;
