@@ -8,19 +8,40 @@ public class PlayerController : MonoBehaviour {
     SpriteRenderer mySR;
     Animator myAnim;
 
+    // movement
     public float maxSpeed;
-
     bool facingRight = true;
+
+    //Jumping 
+
+    bool grounded = false;
+    float groundCheckRadius = 0.2f;
+    public LayerMask groundLayer;
+    public Transform groundCheck;
+    public float jumpPower;
 
 	// Use this for initialization
 	void Start () {
         myRB = GetComponent<Rigidbody2D>();
         mySR = GetComponent<SpriteRenderer>();
         myAnim = GetComponent<Animator>();
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
+        if(grounded && Input.GetAxis("Jump") > 0) //player jumping
+        {
+            myAnim.SetBool("isGrounded", false);
+            myRB.velocity = new Vector2(myRB.velocity.x, 0f);
+            myRB.AddForce(new Vector2(0, jumpPower), ForceMode2D.Impulse);
+            grounded = false;
+        }
+
+        grounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);   //creates a circle at feet and checks if there is an overlap
+        myAnim.SetBool("isGrounded", grounded);
+
         float move = Input.GetAxis("Horizontal");
         Debug.Log(move);
 
