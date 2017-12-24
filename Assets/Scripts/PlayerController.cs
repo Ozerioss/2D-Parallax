@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour {
         myRB = GetComponent<Rigidbody2D>();
         mySR = GetComponent<SpriteRenderer>();
         myAnim = GetComponent<Animator>();
-
+        flip(); // workaround
 	}
 	
 	// Update is called once per frame
